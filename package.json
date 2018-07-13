@@ -14,6 +14,8 @@
   "license": "MIT",
   "repository": "https://github.com/liamross/functional-frontend.git",
   "dependencies": {
+    "@glennsl/bs-json": "^2.0.0",
+    "bs-fetch": "^0.3.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "reason-react": ">=0.4.2"
