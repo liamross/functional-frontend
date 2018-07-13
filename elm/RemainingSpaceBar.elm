@@ -26,21 +26,24 @@ main =
 type alias Connector =
     { resourceType : String
     , used : Int
-    , teamId : String
-    , regionId : Int
-    , repositoryId : String
     }
+
+
+type Status
+    = Success
+    | Loading
+    | Error String
 
 
 type alias Model =
     { connectors : List Connector
-    , error : String
+    , status : Status
     }
 
 
 init : ( Model, Cmd Msg )
 init =
-    ( Model [] "", getConnectors )
+    ( Model [] Loading, getConnectors )
 
 
 
@@ -55,10 +58,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         ConnectorsResponse (Ok connectors) ->
-            ( { model | connectors = connectors, error = "" }, Cmd.none )
+            ( { model | connectors = connectors, status = Success }, Cmd.none )
 
         ConnectorsResponse (Err _) ->
-            ( { model | connectors = [], error = "Error." }, Cmd.none )
+            ( { model | connectors = [], status = Error "Error." }, Cmd.none )
 
 
 
@@ -67,16 +70,28 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
+    let
+        modelBody =
+            case model.status of
+                Loading ->
+                    Html.text "Loading..."
+
+                Error text ->
+                    Html.text text
+
+                Success ->
+                    div
+                        [ class "storage-used__display" ]
+                        (List.indexedMap
+                            (\idx connector -> connectorBar idx connector model)
+                            model.connectors
+                        )
+    in
     div
         [ class "storage-used" ]
         [ div
             [ class "storage-used__main" ]
-            [ div
-                [ class "storage-used__display" ]
-                (List.indexedMap
-                    (\index connector -> connectorBar index connector model)
-                    model.connectors
-                )
+            [ modelBody
             ]
         ]
 
@@ -191,9 +206,6 @@ connectorDecoder =
     Record.decode Connector
         |> Record.required "resourceType" Decode.string
         |> Record.required "used" Decode.int
-        |> Record.required "teamId" Decode.string
-        |> Record.required "regionId" Decode.int
-        |> Record.required "repositoryId" Decode.string
 
 
 

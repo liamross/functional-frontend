@@ -14,15 +14,15 @@ fetchConnectors =
                     [
                         {
                             "resourceType":"Exchange",
-                            "used":448076898,
+                            "used":448076898
                         },
                         {
                             "resourceType":"SP",
-                            "used":922683,
+                            "used":922683
                         },
                         {
                             "resourceType":"Exports",
-                            "used":8448922683,
+                            "used":8448922683
                         }
                     ]
                 """
