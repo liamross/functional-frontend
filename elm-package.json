@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
-  "summary": "Elm front end demo.",
-  "repository": "https://github.com/elm-lang/elm-architecture-tutorial.git",
-  "license": "BSD3",
+  "summary": "functional-frontend.",
+  "repository": "https://github.com/liamross/functional-frontend.git",
+  "license": "MIT",
   "source-directories": ["elm"],
   "exposed-modules": [],
   "dependencies": {
